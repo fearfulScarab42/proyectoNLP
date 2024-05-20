@@ -107,7 +107,10 @@ async def chatbot(user_input):
                 tasksKey.append(print_patter(patter))
             await asyncio.gather(*tasksKey)
         else:
-            print(json.dumps({"response": "Para poder apoyarte, dime el nombre y el dato que deseas saber"}))
+            if "{0}" in respPatter[0]:
+                print(json.dumps({"response": "Para poder apoyarte, dime el nombre y el dato que deseas saber"}))
+            else :
+                print(json.dumps({"response": respPatter[0]}))
             
     if flag:
         
