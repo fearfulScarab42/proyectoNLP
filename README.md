@@ -44,3 +44,8 @@ Proyecto de chatbot
 ```http
   GET http://127.0.0.1:3000
 ```
+
+#### Ejemplo
+
+
+![Logo](https://raw.githubusercontent.com/fearfulScarab42/EasyOCR/main/Postman.png)
