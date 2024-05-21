@@ -38,3 +38,9 @@ Proyecto de chatbot
 ```
   node server.js
 ```
+
+## Acceder
+
+```http
+  GET http://127.0.0.1:3000
+```
