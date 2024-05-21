@@ -48,4 +48,4 @@ Proyecto de chatbot
 #### Ejemplo
 
 
-![Logo](https://raw.githubusercontent.com/fearfulScarab42/EasyOCR/main/Postman.png)
+![Logo](https://github.com/fearfulScarab42/proyectoNLP/blob/main/Captura.PNG)
