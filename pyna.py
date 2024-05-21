@@ -104,7 +104,7 @@ async def chatbot(user_input):
         if len(respKeys) > 0:
             tasksKey = []
             for patter in respPatter:
-                if len(patter.split())>1:
+                if len(patter.split())==1:
                     tasksKey.append(print_patter(patter))
                 else:
                     print(json.dumps({"response": patter}))
