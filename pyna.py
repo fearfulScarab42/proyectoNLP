@@ -94,6 +94,7 @@ patterns = [
     [r'(dirección|direccion|ubicación|ubicacion)', [f"address"]],
     [r'(número|numero|telefono|teléfono)', [f"helpnumber"]],
     [r'(email|correo)', [f"helpmail"]],
+    [r'(nombre)', [f"helpname"]],
     [r'latitud', [f"lat"]],
     [r'longitud', [f"long"]],
 ]
@@ -163,7 +164,11 @@ async def chatbot(user_input):
     
     await asyncio.gather(*tasks)
         
-        
+
+    resp = chat.respond(user_input.lower())
+    if resp and len(resp.split())>1:
+        print(json.dumps({"response": resp}))
+        sys.exit()
         
         
     if len(respPatter)>0:
@@ -186,14 +191,9 @@ async def chatbot(user_input):
                     sys.exit()
                 else:
                     print(json.dumps({"response": respPatter[0]}))
-            
-    if flag:
+    else:
+        print(json.dumps({"response": "No he entendido tu pregunta"}))
         
-        resp = chat.respond(user_input.lower())
-        if resp:
-            print(json.dumps({"response": resp}))
-        else:
-            print(json.dumps({"response": "No he entendido tu pregunta"}))
 
 
 
