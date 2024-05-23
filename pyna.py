@@ -6,8 +6,42 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 import sys
 import json
+import os
+import re 
 
-data = requests.get("https://billing.hutchisonports.com.mx/AppService/public/terminals").json()
+
+
+data = requests.get("https://billing.hutchisonports.com.mx/AppService/public/terminals")
+
+if data.status_code == 200:
+    with open('terminals.json', 'w') as file:
+        file.write(data.text)
+else:
+    if os.path.exists('terminals.json'):
+        with open('terminals.json', 'r') as file:
+            data = json.load(file)
+    else :
+        print("Una disculpa, datos de la página no disponibles por el momento")
+        sys.exit()
+
+data = data.json()
+
+dataFAQ = requests.get("https://billing.hutchisonports.com.mx/AppService/public/faqinfolist")
+
+if dataFAQ.status_code == 200:
+    with open('FAQ.json', 'w') as file:
+        file.write(dataFAQ.text)
+else:
+    if os.path.exists('FAQ.json'):
+        with open('FAQ.json', 'r') as file:
+            dataFAQ = json.load(file)
+    else :
+        print("Una disculpa, datos de la página no disponibles por el momento")
+        sys.exit()
+
+dataFAQ = dataFAQ.json()
+
+      
 
 
 stop_words = set(stopwords.words('spanish'))
@@ -23,6 +57,16 @@ possible_responses = {
         'Puedes contactar a {0} con el teléfono {1}',
         'El número de {0} es {1}',
         'El teléfono de {0} es {1}'
+    ],
+    "helpmail" :  [
+        'Puedes contactar a {0} con el email {1}',
+        'Puedes contactar a {0} con el correo electrónico {1}',
+        'El correo electrónico de {0} es {1}',
+        'El email de {0} es {1}'
+    ],
+    "helpname" :  [
+        'El nombre oficial de {0} es {1}',
+        '{0} se le conoce como {1}'
     ]
 }
 
@@ -38,7 +82,9 @@ def getPatter(patter):
 patterns = [
     [r'ayuda', ['Puedo ayudarte a consultar datos de HutchisonPorts ¿En qué lugar necesitas asistencia?']],
     [r'(dirección|direccion|ubicación|ubicacion)', [f"address"]],
-    [r'(número|numero|telefono|teléfono)', [f"helpnumber"]]
+    [r'(número|numero|telefono|teléfono)', [f"helpnumber"]],
+    [r'(email|correo)', [f"helpmail"]],
+    [r'nombre', [f"helpname"]],
 ]
 
 patterns += [
@@ -47,6 +93,8 @@ patterns += [
     [r'(buenas|Buenas) noches', ['¡Buenas noches! ¿Necesitas algo más antes de dormir?']],
     [r'(buenos|Buenos|buenas|Buenas) (dias|días|tardes)', ['¡Buenos %2! ¿En qué puedo asistirte hoy?','¡Buenas %2! ¿Cómo puedo ayudarte?']],
 ]
+
+
 
 
 respPatter = []
