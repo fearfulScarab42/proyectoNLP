@@ -67,6 +67,14 @@ possible_responses = {
     "helpname" :  [
         'El nombre oficial de {0} es {1}',
         '{0} se le conoce como {1}'
+    ],
+    "lat" :  [
+        'La latitud de {0} es {1}',
+        '{1} Es la latitud de {0}'
+    ],
+    "long" :  [
+        'La longitud de {0} es {1}',
+        '{1} Es la longitud de {0}'
     ]
 }
 
@@ -84,7 +92,8 @@ patterns = [
     [r'(dirección|direccion|ubicación|ubicacion)', [f"address"]],
     [r'(número|numero|telefono|teléfono)', [f"helpnumber"]],
     [r'(email|correo)', [f"helpmail"]],
-    [r'nombre', [f"helpname"]],
+    [r'latitud', [f"lat"]],
+    [r'longitud', [f"long"]],
 ]
 
 patterns += [
@@ -149,6 +158,7 @@ async def chatbot(user_input):
 
     if len(respPatter)>0:
         flag = False
+        
         if len(respKeys) > 0:
             tasksKey = []
             for patter in respPatter:
@@ -158,7 +168,7 @@ async def chatbot(user_input):
                     print(json.dumps({"response": patter}))
             await asyncio.gather(*tasksKey)
         else:
-            if "{0}" in respPatter[0]:
+            if "{0}" not in respPatter[0]:
                 print(json.dumps({"response": "Para poder apoyarte, dime el nombre y el dato que deseas saber"}))
             else :
                 print(json.dumps({"response": respPatter[0]}))
@@ -182,3 +192,4 @@ if __name__ == "__main__":
         prompt = input_data.get("prompt")
         #chatbot(prompt)
         asyncio.run(chatbot(prompt))
+
