@@ -8,6 +8,7 @@ import sys
 import json
 import os
 import re 
+import html
 
 
 
@@ -80,6 +81,7 @@ possible_responses = {
 
 # Extraer información relevante para el chatbot
 locations = {place['name'].lower(): place for place in data['Body']}
+FAQ = {json["id"]: json for json in dataFAQ["Body"]}
 
 def getPatter(patter):
     return random.choice(possible_responses[patter])
@@ -103,7 +105,15 @@ patterns += [
     [r'(buenos|Buenos|buenas|Buenas) (dias|días|tardes)', ['¡Buenos %2! ¿En qué puedo asistirte hoy?','¡Buenas %2! ¿Cómo puedo ayudarte?']],
 ]
 
+patterns += [
+    [r'apropiado',['3']],
+    [r'valor',['2']],
+    [r'apropiado',['1']],
+]
 
+def clean_html(raw_html):
+    clean_text = re.sub('<.*?>', '', raw_html)
+    return html.unescape(clean_text)
 
 
 respPatter = []
@@ -155,7 +165,7 @@ async def chatbot(user_input):
         
         
         
-
+        
     if len(respPatter)>0:
         flag = False
         
@@ -168,10 +178,14 @@ async def chatbot(user_input):
                     print(json.dumps({"response": patter}))
             await asyncio.gather(*tasksKey)
         else:
-            if "{0}" not in respPatter[0]:
-                print(json.dumps({"response": "Para poder apoyarte, dime el nombre y el dato que deseas saber"}))
-            else :
-                print(json.dumps({"response": respPatter[0]}))
+            try:
+                print(json.dumps({"response": clean_html(FAQ[int(respPatter[0])]["answer"])}))
+            except:
+                if len(respPatter[0].split())==1:
+                    print(json.dumps({"response": "Para poder apoyarte, dime el nombre y el dato que deseas saber"}))
+                    sys.exit()
+                else:
+                    print(json.dumps({"response": respPatter[0]}))
             
     if flag:
         
