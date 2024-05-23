@@ -108,7 +108,7 @@ patterns += [
 patterns += [
     [r'apropiado',['3']],
     [r'valor',['2']],
-    [r'apropiado',['1']],
+    [r'modalidad',['1']],
 ]
 
 def clean_html(raw_html):
