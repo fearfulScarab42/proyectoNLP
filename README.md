@@ -27,7 +27,7 @@ Proyecto de chatbot
 
 
 ```
-  pip3 install nltk
+  pip3 install nltk requests
 ```
 
 
