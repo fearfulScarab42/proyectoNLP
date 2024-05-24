@@ -9,6 +9,7 @@ import json
 import os
 import re 
 import html
+import time
 
 
 
@@ -90,7 +91,7 @@ def getPatter(patter):
 
 # Definir patrones y respuestas para el chatbot
 patterns = [
-    [r'ayuda', ['Puedo ayudarte a consultar datos de HutchisonPorts ¿En qué lugar necesitas asistencia?']],
+    [r'ayuda', ['Puedo ayudarte a consultar datos de HutchisonPorts sobre dirección, teléfono, email, latitud y longitud. De los siguientes lugares:']],
     [r'(dirección|direccion|ubicación|ubicacion)', [f"address"]],
     [r'(número|numero|telefono|teléfono)', [f"helpnumber"]],
     [r'(email|correo)', [f"helpmail"]],
@@ -107,7 +108,7 @@ patterns += [
 ]
 
 patterns += [
-    [r'apropiado',['3']],
+    [r'(apropiado|transporte)',['3']],
     [r'valor',['2']],
     [r'modalidad',['1']],
 ]
@@ -168,6 +169,13 @@ async def chatbot(user_input):
     resp = chat.respond(user_input.lower())
     if resp and len(resp.split())>1:
         print(json.dumps({"response": resp}))
+        if "ayuda" in tokens:
+            for key, value in locations.items():
+                sys.stdout.flush()
+                time.sleep(.777)
+                print(json.dumps({"response": key}))
+            print(json.dumps({"response": "Tambien puedo responder sobre: el transporte más apropiado para productos, el valor del flete para el transporte y modalidad de transporte puedo utilizar para la exportación"}))
+                
         sys.exit()
         
         
@@ -191,6 +199,7 @@ async def chatbot(user_input):
                     sys.exit()
                 else:
                     print(json.dumps({"response": respPatter[0]}))
+                    
     else:
         print(json.dumps({"response": "No he entendido tu pregunta"}))
         
@@ -206,4 +215,3 @@ if __name__ == "__main__":
         prompt = input_data.get("prompt")
         #chatbot(prompt)
         asyncio.run(chatbot(prompt))
-
