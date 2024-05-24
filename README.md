@@ -17,6 +17,7 @@ Proyecto de chatbot
 - node >= 20.11.1
 - npm >= 10.2.4
 - nltk == 3.8.1
+- requests==2.31.0
 
 
 ## Instalar
