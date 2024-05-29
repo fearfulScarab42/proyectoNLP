@@ -57,3 +57,4 @@ El proyecto de chatbot de atención de primer nivel que utiliza Procesamiento de
 
 
 ![Logo](https://github.com/fearfulScarab42/proyectoNLP/blob/main/Captura.PNG)
+![Logo](https://github.com/fearfulScarab42/proyectoNLP/blob/main/Captura2.jpg)
