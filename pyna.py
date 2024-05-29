@@ -3,7 +3,7 @@ import random
 import asyncio
 from nltk.chat.util import Chat, reflections
 from nltk.tokenize import word_tokenize
-from nltk.corpus import stopwords
+#from nltk.corpus import stopwords
 import sys
 import json
 import os
@@ -46,7 +46,7 @@ dataFAQ = dataFAQ.json()
       
 
 
-stop_words = set(stopwords.words('spanish'))
+#stop_words = set(stopwords.words('spanish'))
 
 possible_responses = {
     "address" :  [
@@ -157,10 +157,10 @@ async def chatbot(user_input):
     flag = True
     
     tokens = word_tokenize(user_input.lower())
-    tokens_filtrados = [word for word in tokens if word not in stop_words]
+#    tokens_filtrados = [word for word in tokens if word not in stop_words]
     
-    if len(tokens_filtrados)>0:
-        for toke in tokens_filtrados:
+    if len(tokens)>0:
+        for toke in tokens:
             tasks.append(async_patter(toke))
     
     await asyncio.gather(*tasks)
