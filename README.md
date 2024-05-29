@@ -2,6 +2,7 @@
 # Projecto NLP
 
 Proyecto de chatbot
+El proyecto de chatbot de atención de primer nivel que utiliza Procesamiento de Lenguaje Natural (NLP) implica la creación de un agente conversacional que puede comprender y procesar el lenguaje humano para brindar respuestas apropiadas. El objetivo es proporcionar una atención al cliente eficiente y efectiva, mejorando así la experiencia del usuario. El chatbot se basa en algoritmos de NLP para analizar las entradas de los usuarios, extraer la intención y las entidades, y generar respuestas relevantes. Esto permite interacciones más naturales y humanas, lo que resulta en una mejor satisfacción del usuario.
 
 ## Autores
 
